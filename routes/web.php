@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PostController::class, 'index']);
+Route::get('/author/{author}', [PostController::class, 'user']);
+Route::get('/category/{category}', [PostController::class, 'category']);
+Route::get('/author/{author}/category/{category}', [PostController::class, 'userCategory']);
