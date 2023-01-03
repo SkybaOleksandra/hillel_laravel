@@ -19,3 +19,5 @@ Route::get('/', [PostController::class, 'index']);
 Route::get('/author/{author}', [PostController::class, 'user']);
 Route::get('/category/{category}', [PostController::class, 'category']);
 Route::get('/author/{author}/category/{category}', [PostController::class, 'userCategory']);
+Route::get('/tag/{tag}', [PostController::class, 'tag']);
+Route::get('/author/{author}/category/{category}/tag/{tag}', [PostController::class, 'userCategoryTag']);
