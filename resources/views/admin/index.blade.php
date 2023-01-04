@@ -1,24 +1,24 @@
-@extends('layout')
+@extends('admin.layout')
 
 @section('title', 'Home page')
 
 @section('content')
-    @include('list', [
+    @include('admin.list', [
     'links' => [
         [
-            'link'=>'categories/',
+            'link'=>'/admin/categories/',
             'name'=>'Categories'
         ],
         [
-            'link'=>'posts/',
+            'link'=>'/admin/posts/',
             'name'=>'Posts'
         ],
         [
-            'link'=>'tags/',
+            'link'=>'/admin/tags/',
             'name'=>'Tags'
         ],
         [
-            'link'=>'author/',
+            'link'=>'/admin/author/',
             'name'=>'Author'
         ]
 ]

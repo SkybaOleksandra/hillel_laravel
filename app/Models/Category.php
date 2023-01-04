@@ -10,6 +10,16 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+    ];
+
     public $timestamps = false;
 
     public function posts() {

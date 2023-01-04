@@ -10,6 +10,16 @@ class Tag extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+    ];
+
     public function posts() {
         return $this->belongsToMany(Post::class)->withTimestamps();
     }
