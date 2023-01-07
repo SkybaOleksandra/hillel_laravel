@@ -2,6 +2,8 @@
 
 @section('title', 'Home page')
 
+@extends('admin.partials.logout')
+
 @section('content')
     @include('admin.list', [
     'links' => [

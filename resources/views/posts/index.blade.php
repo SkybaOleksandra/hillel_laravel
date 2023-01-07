@@ -6,7 +6,7 @@
     @include('admin.partials.breadcrumbs',[
         'links'=> [
             [
-                'link'=>'/admin',
+                'link'=>'/',
                 'name'=>'Home'
             ],
             [

@@ -8,6 +8,7 @@
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
 </head>
 <body class="p-3 m-0 border-0 bd-example">
+@yield('logout')
 @yield('breadcrumbs')
 @yield('content')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
