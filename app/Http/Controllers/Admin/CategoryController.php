@@ -9,6 +9,10 @@ use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
+    /*public function __construct() {
+        $this->authorizeResource(Category::class, 'category');
+    }*/
+
     public function index() {
         $categories=Category::all();
         return view('admin/categories/list-categories', compact('categories'));
@@ -46,7 +50,7 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories');
     }
 
-    public function destroy($id) {
+    public function delete($id) {
         $category=Category::find($id);
         if(Post::where('category_id', $id)->first()) {
             $categories=Category::all();
@@ -68,7 +72,9 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories');
     }
 
-    public function delete($id) {
+    public function forceDelete($id) {
+        $category=Category::withTrashed()->where('id', $id)->first();
+        $this->authorize('forceDelete', $category);
         Category::withTrashed()->where('id', $id)->forceDelete();
         return redirect()->route('admin.categories.trash');
     }

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Controllers\Admin\Controller;
-
-class WelcomeController extends Controller
+class WelcomeController
 {
     public function index()
     {

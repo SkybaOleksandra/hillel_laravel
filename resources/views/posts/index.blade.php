@@ -40,7 +40,7 @@
                     <td><a href="/author/{{ $post->user->id }}">{{ $post->user->name }}</a></td>
                     <td>
                         @foreach($post->tags->pluck('id') as $item)
-                            <a href="/tag/{{ $item }}"> {{ $tags->where('id', $item)->pluck('title')->join('')}}</a>
+                            <a href="/tag/{{ $item }}"> {{ $post->tags->where('id', $item)->pluck('title')->join('')}}</a>
                         @endforeach
                     </td>
                     <td>{{ $post->updated_at }}</td>

@@ -24,7 +24,7 @@
 @section('content')
     <div class="container mt-10">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-info" href="{{ route('admin.posts.trash') }}" role="button">List</a>
+            <a class="btn btn-info" href="{{ route('admin.posts') }}" role="button">List</a>
         </div>
         <table  class="table table-hover">
             <tr>

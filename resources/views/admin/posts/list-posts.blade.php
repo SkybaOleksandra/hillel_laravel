@@ -34,7 +34,7 @@
                 <th>Tags</th>
                 <th>Created at</th>
                 <th>Updated at</th>
-                <th colspan="2">Action</th>
+                <th colspan="3">Action</th>
             </tr>
             @foreach($posts as $post)
                 <tr>
@@ -47,6 +47,7 @@
                     <td>{{ $post->tags->pluck('title')->join(', ') }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>{{ $post->updated_at }}</td>
+                    <td><a href="{{ route('admin.posts.show', ['id'=>$post->id]) }}">Show</a></td>
                     <td><a href="{{ route('admin.posts.edit', ['id'=>$post->id]) }}">Update</a></td>
                     <td><a href="{{ route('admin.posts.destroy', ['id'=>$post->id]) }}">Delete</a></td>
                 </tr>

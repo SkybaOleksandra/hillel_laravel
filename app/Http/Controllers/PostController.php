@@ -2,64 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
-use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use App\Http\Controllers\Admin\Controller;
 
-class PostController extends Controller
+class PostController
 {
     public function index()
     {
-        $posts = Post::all();
-        $tags = Tag::all();
-        return view('posts/index', compact('posts', 'tags'));
+        $posts = Post::with(['user', 'tags', 'category'])->get();
+        return view('posts/index', compact('posts'));
     }
 
     public function user($id)
     {
-        $tags = Tag::all();
-        $user = User::find($id);
-        $posts = Post::all()->where('user_id', $id);
-        return view('posts/index', compact('user', 'posts', 'tags'));
+        $posts = Post::with(['tags', 'category', 'user'])->where('user_id', $id)->get();
+        return view('posts/index', compact( 'posts'));
     }
 
     public function category($id)
     {
-        $tags = Tag::all();
-        $category = Category::find($id);
-        $posts = Post::all()->where('category_id', $id);
-        return view('posts/index', compact('category', 'posts', 'tags'));
+        $posts = Post::with(['tags', 'user', 'category'])->where('category_id', $id)->get();
+        return view('posts/index', compact( 'posts'));
     }
 
     public function tag($id)
     {
-        $tags = Tag::all();
-        $tag = Tag::find($id);
-        $posts = Post::whereHas('tags', function (Builder $post) use ($id) {
+        $posts = Post::with(['tags', 'user', 'category'])->whereHas('tags', function (Builder $post) use ($id) {
             $post->where('tag_id', $id);
         })->get();
-        return view('posts/index', compact('tag', 'posts', 'tags'));
+        return view('posts/index', compact( 'posts'));
     }
 
     public function userCategory($idAuthor, $idCategory)
     {
-        $user = User::find($idAuthor);
-        $category = Category::find($idCategory);
-        $tags = Tag::all();
-        $posts=Post::all()->where('category_id', $idCategory)->where('user_id', $idAuthor);
-        return view('posts/index', compact('posts', 'user', 'category', 'tags'));
+        $posts = Post::with(['tags', 'user', 'category'])->whereHas('user', function (Builder $post) use ($idAuthor, $idCategory) {
+            $post->where('user_id', $idAuthor);
+            $post->where('category_id', $idCategory);
+        })->get();
+        return view('posts/index', compact( 'posts'));
+
     }
 
     public function userCategoryTag($idAuthor, $idCategory, $idTag)
     {
-        $tags = Tag::all();
-        $user = User::find($idAuthor);
-        $category = Category::find($idCategory);
-        $tag = Tag::find($idTag);
-        $posts=Post::all()->where('category_id', $idCategory)->where('user_id', $idAuthor);
-        return view('posts/index', compact('posts', 'user', 'category', 'tag', 'tags'));
+        $posts = Post::with(['tags', 'user', 'category'])->whereHas('tags', function (Builder $post) use ($idAuthor, $idCategory, $idTag) {
+            $post->where('user_id', $idAuthor);
+            $post->where('category_id', $idCategory);
+            $post->where('tag_id', $idTag);
+        })->get();
+        return view('posts/index', compact( 'posts'));
     }
 }

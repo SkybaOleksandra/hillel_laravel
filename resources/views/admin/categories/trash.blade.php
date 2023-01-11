@@ -39,7 +39,9 @@
                     <td>{{ $category->title }}</td>
                     <td>{{ $category->slug }}</td>
                     <td><a href="{{ route('admin.categories.restore', ['id' =>$category->id]) }}">Restore</a></td>
-                    <td><a href="{{ route('admin.categories.delete', ['id' =>$category->id]) }}">Delete</a></td>
+                    @can('forceDelete', \App\Models\Category::class)
+                        <td><a href="{{ route('admin.categories.delete', ['id' =>$category->id]) }}">Delete</a></td>
+                    @endcan
                 </tr>
             @endforeach
         </table>

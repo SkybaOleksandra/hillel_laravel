@@ -24,11 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WelcomeController::class, 'index'])->name('main');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
-Route::get('/category/{category}', [AdminPostController::class, 'category'])->name('category'); //пости певної категорії
-Route::get('/tag/{tag}', [AdminPostController::class, 'tag'])->name('tag'); //пости з певним тегом
-Route::get('/author/{author}', [AdminPostController::class, 'user'])->name('author'); //пости певного автора
-Route::get('/author/{author}/category/{category}', [AdminPostController::class, 'userCategory'])->name('author.category'); //пости з певним автором та категорією
-Route::get('/author/{author}/category/{category}/tag/{tag}', [AdminPostController::class, 'userCategoryTag'])->name('author.category.tag'); //пости з певним автором, категорією та тегами
+Route::get('/category/{category}', [PostController::class, 'category'])->name('category'); //пости певної категорії
+Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag'); //пости з певним тегом
+Route::get('/author/{author}', [PostController::class, 'user'])->name('author'); //пости певного автора
+Route::get('/author/{author}/category/{category}', [PostController::class, 'userCategory'])->name('author.category'); //пости з певним автором та категорією
+Route::get('/author/{author}/category/{category}/tag/{tag}', [PostController::class, 'userCategoryTag'])->name('author.category.tag'); //пости з певним автором, категорією та тегами
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
@@ -43,10 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store');
     Route::get('/admin/categories/{id}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
     Route::post('/admin/categories/{id}/update', [CategoryController::class, 'update'])->name('admin.categories.update');
-    Route::get('/admin/categories/{id}/delete', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    Route::get('/admin/categories/{id}/delete', [CategoryController::class, 'delete'])->name('admin.categories.destroy');
     Route::get('/admin/categories/trash', [CategoryController::class, 'trash'])->name('admin.categories.trash');
     Route::get('/admin/categories/{id}/restore', [CategoryController::class, 'restore'])->name('admin.categories.restore');
-    Route::get('/admin/categories/{id}/force-delete', [CategoryController::class, 'delete'])->name('admin.categories.delete');
+    Route::get('/admin/categories/{id}/force-delete', [CategoryController::class, 'forceDelete'])->name('admin.categories.delete');
 
     Route::get('/admin/tags', [TagController::class, 'index'])->name('admin.tags');
     Route::get('/admin/tags/create', [TagController::class, 'create'])->name('admin.tags.create');
@@ -59,6 +59,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/tags/{id}/force-delete', [TagController::class, 'delete'])->name('admin.tags.delete');
 
     Route::get('/admin/posts', [AdminPostController::class, 'index'])->name('admin.posts');
+    Route::get('/admin/posts/{id}', [AdminPostController::class, 'show'])->name('admin.posts.show');
+    Route::get('/admin/posts/{id}/add-comment', [AdminPostController::class, 'addComment'])->name('admin.posts.comment.add');
+    Route::post('/admin/posts/{id}/add-comment', [AdminPostController::class, 'addComment'])->name('admin.posts.comment.add');
     Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
     Route::post('/admin/posts/store', [AdminPostController::class, 'store'])->name('admin.posts.store');
     Route::get('/admin/posts/{id}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');

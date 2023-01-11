@@ -3,20 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with(['user', 'tags', 'category'])->get();
         return view('admin/posts/list-posts', compact('posts'));
+    }
+
+    public function show($id)
+    {
+        /*$post=Post::find($id);
+        $comments=Comment::all();
+        return view('admin/posts/show', compact('post', 'comments'));*/
+
+        $posts = Post::with(['user', 'tags', 'category', 'comments'])->where('id', $id)->get();
+        return view('admin/posts/show', compact('posts'));
     }
 
     public function create() {
@@ -76,7 +86,7 @@ class PostController extends Controller
     }
 
     public function trash() {
-        $posts=Post::onlyTrashed()->get();
+        $posts=Post::onlyTrashed()->with(['user', 'tags', 'category'])->get();
         return view('admin/posts/trash', compact('posts'));
     }
 
@@ -88,5 +98,17 @@ class PostController extends Controller
     public function delete($id) {
         Post::onlyTrashed()->where('id', $id)->forceDelete();
         return redirect()->route('admin.posts');
+    }
+
+    public function addComment(Request $request, $id) {
+        $request->validate(
+            [
+                'body'=>['required', 'min:3',],
+            ]);
+        $comment = new Comment();
+        $comment->body = $request->input('body');
+        Post::find($id)->comments()->save($comment);
+
+        return redirect()->route('admin.posts.show', ['id'=>$id]);
     }
 }
