@@ -9,7 +9,14 @@ use Illuminate\Support\Facades\Hash;
 class AuthController {
 
     public function login() {
-        return view ('admin/auth/form');
+        $url = 'https://github.com/login/oauth/authorize';
+        $parametrs = [
+            'client_id' => getenv('OAUTH_GITHUB_CLIENT_ID'),
+            'redirect_uri' => getenv('OAUTH_GITHUB_REDIRECT_URI'),
+            'scope' => 'user'
+        ];
+        $url .= '?'.http_build_query($parametrs);
+        return view ('admin/auth/form', compact('url'));
     }
 
     public function handleLogin(Request $request) {
