@@ -12,9 +12,9 @@ class GeoIpController extends Controller
     public function index(GeoipServiceInterface $reader, UserAgentServiceInterface $userAgent) {
 
 
-        $ip = '82.117.232.46';
+        //$ip = '82.117.232.46';
 
-        //$ip = request()->ip();
+        $ip = request()->ip();
 
         $reader->parse($ip);
         $isoCode = $reader->getIsoCode();
@@ -23,7 +23,6 @@ class GeoIpController extends Controller
         $userAgent->parse(request());
         $browserName = $userAgent->getBrowserName();
         $systemName = $userAgent->getSystemName();
-        //dd($browserName, $systemName);
 
         $data = [
             'ip' => $ip,
