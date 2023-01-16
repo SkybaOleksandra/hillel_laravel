@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\GeoIpController;
 use App\Http\Controllers\Oauth\GithubController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [WelcomeController::class, 'index'])->name('main');
-Route::get('/oauth/github/callback', GithubController::class)->name('oauth.github.callback');
+Route::get('/geo', [GeoIpController::class, 'index']);
 
+Route::get('/oauth/github/callback', GithubController::class)->name('oauth.github.callback');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::get('/category/{category}', [PostController::class, 'category'])->name('category'); //пости певної категорії

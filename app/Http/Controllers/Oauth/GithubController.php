@@ -39,7 +39,6 @@ class GithubController
 
         if (!$this->createUser($user->json())) {
             $errorText='Failed to get email address from GitHub. Please add your email address on GitHub or sign up on this website';
-            //return redirect()->route('admin.login');
             return view('admin/auth/form', compact('errorText'));
         }
         return redirect()->route('admin.panel');
