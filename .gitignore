@@ -5,6 +5,7 @@
 /storage/*.key
 /database/geoip
 /vendor
+/packages
 .env
 .env.backup
 .env.production

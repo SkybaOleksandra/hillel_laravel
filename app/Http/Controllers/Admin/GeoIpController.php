@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Controller;
 use App\Services\Geoip\GeoipServiceInterface;
-use App\Services\UserAgent\UserAgentServiceInterface;
+use Laravel\InterfaceUseragent\UserAgentServiceInterface;
 use App\Models\Visit;
 
 class GeoIpController extends Controller
@@ -12,9 +12,9 @@ class GeoIpController extends Controller
     public function index(GeoipServiceInterface $reader, UserAgentServiceInterface $userAgent) {
 
 
-        //$ip = '82.117.232.46';
+        $ip = '82.117.232.46';
 
-        $ip = request()->ip();
+        //$ip = request()->ip();
 
         $reader->parse($ip);
         $isoCode = $reader->getIsoCode();

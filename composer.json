@@ -12,7 +12,9 @@
         "hisorange/browser-detect": "^4.5",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "oleksandra/laravel-interface-useragent": "^1.01",
+        "oleksandra/laravel-useragent-parser": "^1.01"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
@@ -22,8 +24,15 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^1.0",
+        "oleksandra/laravel-useragent-browser-detection":"dev-master"
     },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/SkybaOleksandra/laravel-useragent-browser-detection"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

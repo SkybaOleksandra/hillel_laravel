@@ -21,10 +21,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(GeoipServiceInterface::class, function(){
             return new MaxmindService();
         });
-        $this->app->singleton(UserAgentServiceInterface::class, function(){
+        /*$this->app->singleton(UserAgentServiceInterface::class, function(){
             //return new UserAgentParserService();
             return new BrowserDetectionService();
-        });
+        });*/
     }
 
     /**
