@@ -6,42 +6,17 @@ use App\Http\Controllers\Admin\Controller;
 use App\Services\Geoip\GeoipServiceInterface;
 use Laravel\InterfaceUseragent\UserAgentServiceInterface;
 use App\Models\Visit;
+use App\Jobs\UserAgent;
 
 class GeoIpController extends Controller
 {
-    public function index(GeoipServiceInterface $reader, UserAgentServiceInterface $userAgent) {
+    public function index(GeoipServiceInterface $reader, UserAgentServiceInterface $userAgentObject) {
 
 
         $ip = '82.117.232.46';
-
         //$ip = request()->ip();
+        $userAgent = request()->userAgent();
 
-        $reader->parse($ip);
-        $isoCode = $reader->getIsoCode();
-        $isoCountry = $reader->getCountry();
-
-        $userAgent->parse(request());
-        $browserName = $userAgent->getBrowserName();
-        $systemName = $userAgent->getSystemName();
-
-        $data = [
-            'ip' => $ip,
-            'country_code' =>$isoCountry,
-            'continent_code' =>$isoCode,
-            'browser_name' =>$browserName,
-            'system_name' =>$systemName,
-        ];
-
-        $error = [];
-        foreach ($data as $value) {
-            if($value == null) {
-                $error[] = $value;
-            }
-        }
-
-        if(empty($error)) {
-            Visit::create($data);
-        }
-
+        UserAgent::dispatch($reader, $userAgentObject, $ip, $userAgent)->onQueue('parsing');
     }
 }
